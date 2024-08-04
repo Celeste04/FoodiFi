@@ -1,0 +1,10 @@
+@import url('../colours.css');
+.shopping-list-title {
+    margin-left: 30px;
+    color: var(--dark-blue);
+}
+.list-container {
+    background-color: var(--mint);
+    width: 50%;
+    margin-left: 30px;
+}
