@@ -6,20 +6,21 @@ df = df.astype({'Product' : 'string'})
 for i in range(len(df['Product'])):
     df.loc[i, 'Product'] = df.loc[i, 'Product'].lower().replace(' ', '_')
 
-def url_friendly(string):
-    return string.lower().replace(' ', '_')
-
 
 app = Flask(__name__)
 @app.route("/products")
 def products():
-    # data = request.json
-    # text = data.get('')
-    return get_product_price('croissants')
+    data = request.json
+    text = data.get('text')
+    print(text)
+    if text != "":
+        return jsonify({'error': 'Text parameter is missing'}), 400
+    else:
+        return jsonify(get_product_price(text)), 201
 
 
 def get_product_price(product_name):
-    product_name = url_friendly(product_name)
+    product_name = product_name.lower().replace(' ', '_')
     # Extract the header row for store names
     store_names = df.columns[1:]
     
