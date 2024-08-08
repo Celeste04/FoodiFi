@@ -1,0 +1,26 @@
+@import url('../colours.css');
+
+body {
+    overflow-y: hidden;
+}
+.shopping-list-title {
+    margin-left: 30px;
+    color: var(--dark-blue);
+}
+
+.add-text-input {
+    width: 469px;
+    height: 47px;
+    background-color: white;
+    font-size: 30px;
+    box-shadow: 0 4px 4px 0 rgba(98, 98, 98, 0.2), 0 6px 20px 0 rgba(87, 111, 112, 0.19);
+    border-radius: 10px;
+}
+
+.list-container {
+    background-color: var(--mint);
+    width: 556px;
+    height: 725px;
+    margin-left: 30px;
+    border-radius: 30px;
+}

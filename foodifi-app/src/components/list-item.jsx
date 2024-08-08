@@ -1,0 +1,34 @@
+import React, {useState} from 'react'
+import ListForm from './list-form';
+import { FaTrashCan } from "react-icons/fa6";
+import { TbEdit } from "react-icons/tb";
+
+
+function ListItem({items, removeItem, updateItem}) {
+    const [edit, setEdit] = useState({
+        id: null,
+        value: ''
+    })
+  
+    const submitUpdate = value => {
+      updateItem(edit.id, value);
+      setEdit({
+        id: null,
+        value:''
+      })
+      if (edit.id) {
+        return <ListForm edit={edit} onSubmit={submitUpdate}></ListForm>
+      }
+    }
+
+  return items?.map((item, index)=>(
+    <div className='item-row' key={index}>
+        <div key={item.id}>
+            {item.text}
+        </div>
+        <div className="icons"><FaTrashCan onClick={()=>removeItem(item.id)} className="delete-icon"/></div>
+    </div>
+  ));
+}
+
+export default ListItem;
