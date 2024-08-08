@@ -1,5 +1,6 @@
 import pandas as pd
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify
+from flask_cors import CORS
 
 df = pd.read_csv('grocery_store_prices.csv')
 df = df.astype({'Product' : 'string'})
@@ -8,19 +9,20 @@ for i in range(len(df['Product'])):
 
 
 app = Flask(__name__)
-@app.route("/products")
-def products():
-    data = request.json
-    text = data.get('text')
-    print(text)
-    if text != "":
-        return jsonify({'error': 'Text parameter is missing'}), 400
+CORS(app)
+
+@app.route("/products/<product_name>")
+def products(product_name):
+    response = jsonify({'error': 'Product name is missing'})
+    if product_name == "":
+        response = jsonify({'error': 'Produce name is missing'})
     else:
-        return jsonify(get_product_price(text)), 201
+        response = jsonify(get_product_price(product_name))
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 def get_product_price(product_name):
-    product_name = product_name.lower().replace(' ', '_')
     # Extract the header row for store names
     store_names = df.columns[1:]
     
