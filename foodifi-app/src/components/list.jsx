@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ListForm from './list-form';
 import ListItem from './list-item';
+import  './list-styles.css'
 
 function List() {
     const [items, setItems] = useState([]);
@@ -27,7 +28,7 @@ function List() {
     }
 
     return (
-        <div>
+        <div className="list-wrapper">
             <ListForm onSubmit={addItem} />
             <ListItem items={items} removeItem={removeItem} updateItem={updateItem}/>
         </div>

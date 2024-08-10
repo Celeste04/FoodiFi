@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import { v4 as uuidv4 } from 'uuid';
+import './list-styles.css';
 
 function ListForm(props) {
     const [input, setInput] = useState('');

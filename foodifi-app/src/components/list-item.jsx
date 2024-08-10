@@ -1,8 +1,7 @@
 import React, {useState} from 'react'
 import ListForm from './list-form';
 import { FaTrashCan } from "react-icons/fa6";
-import { TbEdit } from "react-icons/tb";
-
+import './list-styles.css';
 
 function ListItem({items, removeItem, updateItem}) {
     const [edit, setEdit] = useState({
@@ -23,7 +22,7 @@ function ListItem({items, removeItem, updateItem}) {
 
   return items?.map((item, index)=>(
     <div className='item-row' key={index}>
-        <div key={item.id}>
+        <div className="item-text" key={item.id}>
             {item.text}
         </div>
         <div className="icons"><FaTrashCan onClick={()=>removeItem(item.id)} className="delete-icon"/></div>
