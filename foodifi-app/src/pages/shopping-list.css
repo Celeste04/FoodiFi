@@ -2,7 +2,9 @@
 
 body {
     overflow-y: hidden;
+    background-color: var(--background-offwhite);
 }
+
 .shopping-list-title {
     margin-left: 30px;
     color: var(--dark-blue);
@@ -17,10 +19,64 @@ body {
     border-radius: 10px;
 }
 
+.content-wrapper {
+    display: flex;
+    justify-content: space-between; /* Ensures elements are spread out */
+    align-items: flex-start; /* Aligns them at the top */
+    position: relative;
+}
+
 .list-container {
     background-color: var(--mint);
     width: 556px;
     height: 725px;
     margin-left: 30px;
     border-radius: 30px;
+}
+
+.spending-goal {
+    font-size: 20px;
+    margin-right: 40px;
+    color: white;
+    background-color: var(--dark-blue);
+    border-radius: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    align-items: center;
+    width: 40%;
+    border-radius: 30px;
+    height: 70px;
+    z-index: 2;
+}
+
+
+.goal-input {
+    font-size: 20px;
+    margin-left: 15px;
+    height: 50%;
+    border-radius: 5px;
+    padding-left: 10px;
+    width: 50%;
+}
+
+.frog-pic {
+    position: absolute;
+    bottom:0;
+    right: 0;
+    z-index: 3;
+}
+
+.advice {
+    width: 40%;
+    height: 60%;
+    background-color: white;
+    position: absolute;
+    bottom: 30%;
+    right: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    z-index: 1;
+    border-radius: 20px;
+    box-shadow: 0 4px 4px 0 rgba(98, 98, 98, 0.2), 0 6px 20px 0 rgba(87, 111, 112, 0.19);
 }

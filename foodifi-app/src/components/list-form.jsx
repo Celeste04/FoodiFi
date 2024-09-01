@@ -6,9 +6,7 @@ import './list-styles.css';
 function ListForm(props) {
     const [input, setInput] = useState('');
     const inputRef = useRef(null);
-    useEffect(()=>{
-        inputRef.current.focus();
-    })
+
     const handleChange = e => {
         setInput(e.target.value);
     }
@@ -32,7 +30,7 @@ function ListForm(props) {
             name="text" 
             className="list-input"
             onChange={handleChange}
-            ref={inputRef}></input>
+            ></input>
 
             <button className="list-button">Add</button>
         </form>
