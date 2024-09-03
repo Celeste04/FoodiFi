@@ -13,17 +13,18 @@ parser.add_argument('text', type=str, help='text for tts to read out.')
 class ProductPrice(Resource):
     def get(self, product_name):
         if product_name == "":
-            return jsonify({'error': 'Produce name is missing'}), 400
+            return jsonify({'error': 'Product name is missing'}), 400
         else:
-            return jsonify(product_prices.get_product_price(product_name)), 200
+            n, p = product_prices.get_lowest_price(product_name)
+            return jsonify({n : p}), 200
 
 class FrogTTS(Resource):
     def post(self):
         args = parser.parse_args(strict=True)
         if not args['text']:
-            return jsonify({'error': 'Produce name is missing'}), 400
+            return jsonify({'error': 'text is missing'}), 400
         file_path = tts.get_tts(args['text'])
-        return send_file(file_path, mimetype="audio/wav", as_attachment=True)
+        return send_file(file_path, mimetype="audio/wav", as_attachment=True), 201
 
 
         
