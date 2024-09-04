@@ -1,45 +1,35 @@
-import pandas as pd
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_file
 from flask_cors import CORS
-
-df = pd.read_csv('grocery_store_prices.csv')
-df = df.astype({'Product' : 'string'})
-for i in range(len(df['Product'])):
-    df.loc[i, 'Product'] = df.loc[i, 'Product'].lower().replace(' ', '_')
-
+from flask_restful import Api, Resource, reqparse
+import product_prices
+import tts
 
 app = Flask(__name__)
 CORS(app)
+api = Api(app)
+parser = reqparse.RequestParser()
+parser.add_argument('text', type=str, help='text for tts to read out.')
 
-@app.route("/products/<product_name>")
-def products(product_name):
-    response = jsonify({'error': 'Product name is missing'})
-    if product_name == "":
-        response = jsonify({'error': 'Produce name is missing'})
-    else:
-        response = jsonify(get_product_price(product_name))
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
+class ProductPrice(Resource):
+    def get(self, product_name):
+        if product_name == "":
+            return jsonify({'error': 'Product name is missing'}), 400
+        else:
+            n, p = product_prices.get_lowest_price(product_name)
+            return jsonify({n : p}), 200
+
+class FrogTTS(Resource):
+    def post(self):
+        args = parser.parse_args(strict=True)
+        if not args['text']:
+            return jsonify({'error': 'text is missing'}), 400
+        file_path = tts.get_tts(args['text'])
+        return send_file(file_path, mimetype="audio/wav", as_attachment=True), 201
 
 
-def get_product_price(product_name):
-    # Extract the header row for store names
-    store_names = df.columns[1:]
-    
-    # Find the row corresponding to the product
-    product_row = df[df["Product"] == product_name]
-    
-    if product_row.empty:
-        return {}
-    
-    # Extract the prices for the product
-    prices = product_row.iloc[0, 1:]
-    
-    # Create a dictionary mapping store names to prices
-    price_dict = dict(zip(store_names, prices))
-    
-    return price_dict
         
+api.add_resource(ProductPrice, '/products/<product_name>')
+api.add_resource(FrogTTS, '/tts')
 
 if __name__ == '__main__':
     app.run(debug=True)
