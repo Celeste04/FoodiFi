@@ -49,20 +49,6 @@ def convert_name_to_search_query(item_name:str) -> str:
     item_name = item_name.replace(" ", "+")
     return item_name
 
-
-# find cheapest item in the SOUP
-def find_cheapest_item(soup:BeautifulSoup):
-    items = soup.find('div', {'data-testid' : 'item-stack'}).children # get all item divs
-    for i in items:
-        # get item's name and price
-        name = i.find('span', {'data-automation-id' : 'product-title'}).get_text()
-        price = convert_price_to_float(i.find('div', {'data-automation-id' : 'product-price'}).div.get_text())
-        # check if item is in stock. if so, return item name and price
-        if len(i.find('div', {'data-automation-id' : 'inventory-status'})) == 0:
-            return name, price
-   
-    return "No items available for purchase.",0
-
 def retrieve_items_and_prices(item_name:str):
     item_name = convert_name_to_search_query(item_name)
 
@@ -103,5 +89,6 @@ def retrieve_items_and_prices(item_name:str):
     save_prev_scraped(products)
     print(products)
     return products
-    
-retrieve_items_and_prices("apple juice")
+
+# testing
+# retrieve_items_and_prices("apple juice")
