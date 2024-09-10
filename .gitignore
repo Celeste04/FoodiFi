@@ -23,3 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 node_modules
 frontend/node_modules/*
+web-scraping/chromedriver.exe
+/.vscode
+/web-scraping/__pycache__
