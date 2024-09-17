@@ -23,11 +23,29 @@ def products(product_name):
     return response
 
 
-def get_product_price(product_name):
+def get_product_price(product_name:str):
+    # get walmart and giant tiger prices for a specific product search
+    wm_data = walmart_scrape.retrieve_items_and_prices(product_name)
+    gt_data = giant_tiger_scrape.retrieve_items_and_prices(product_name)
     
-    
-    return
+    # get the cheapest item in each dataframe
+    wm_item, wm_price = get_cheapest_price(wm_data)
+    # gt_item, gt_price = get_cheapest_price(gt_data) # commented out until giant tiger also returns a dataframe
+
+    # return a JSON object
+    return jsonify({"Giant Tiger" : ["item", "price"], "Walmart" : [wm_item, wm_price]}) # rmbr to fill in giant tiger item & price later
         
+def get_cheapest_price(data:pd.DataFrame):
+    min_price = 100000000
+    min_item = "na"
+    for i in range(len(data['Price'])):
+        item = str(df.iloc[i, 1])
+        price = float(df.iloc[i, 2])
+        if price < min_price:
+            min_price = price
+            min_item = item
+    return min_item, min_price
+
 
 if __name__ == '__main__':
     app.run(debug=True)
